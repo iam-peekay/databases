@@ -5,6 +5,7 @@ USE chat;
 CREATE TABLE messages (
   id int(6) NOT NULL AUTO_INCREMENT,
   message VARCHAR(255) DEFAULT NULL,
+  createdAt VARCHAR(255) DEFAULT NULL,
   id_rooms int(3) DEFAULT NULL,
   id_users int(5) DEFAULT NULL,
   PRIMARY KEY (id)

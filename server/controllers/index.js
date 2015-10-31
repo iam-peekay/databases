@@ -19,14 +19,15 @@ module.exports = {
     }, // a function which handles a get request for all messages
     post: function (req, res) {
       var body = '';
-      req.on('data', function(err, chunk) {
+      req.on('data', function(chunk) {
         body += chunk;
+        
       });
-      req.on('end', function(err) {
-        models.messages.post(body, function(err, result) {
-          if (err) { res.end(500); }
+      req.on('end', function(err, data) {
+        models.messages.post(body, function(err) {
+          if (err) { res.end('500'); }
           else {
-            res.end(201);
+            res.end('201');
           }
         });
       });
@@ -50,10 +51,10 @@ module.exports = {
         body += chunk;
       });
       req.on('end', function(err) {
-        models.messages.post(body, function(err, result) {
-          if (err) { res.end(500); }
+        models.messages.post(body, function(err) {
+          if (err) { res.end('500'); }
           else {
-            res.end(201);
+            res.end('201');
           }
         });
       });
