@@ -11,13 +11,6 @@ CREATE TABLE messages (
   PRIMARY KEY (objectId)
 );
 
-/* Create other tables and define schemas for them here! */
--- CREATE TABLE rooms (
---   id int(6) NOT NULL AUTO_INCREMENT,
---   roomname VARCHAR(50) DEFAULT NULL,
---   PRIMARY KEY (id)
--- );
-
 CREATE TABLE users (
   id int(6) NOT NULL AUTO_INCREMENT,
   username VARCHAR(50) DEFAULT NULL,
