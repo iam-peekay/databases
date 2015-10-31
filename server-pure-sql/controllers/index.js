@@ -44,6 +44,10 @@ module.exports = {
     },
     post: function (req, res) {
       var body = '';
+      req.on('data', function(err, chunk) {
+        body += chunk;
+      });
+      req.on('end', function(err) {
         var user = JSON.parse(body)
         models.messages.post(user.username, function(err) {
           if (err) { res.end('500'); }
@@ -52,6 +56,7 @@ module.exports = {
             res.end('201');
           }
         });
+      });
     } 
   }
 };
