@@ -41,7 +41,6 @@ module.exports = {
           }
         })
         .then(function(result){
-          console.log(result.id)
           post.usersId = result.id;
           db.messages.create(post);
         })
@@ -51,35 +50,8 @@ module.exports = {
         .error(function(err){
           callback(err);
         })
-        // var queryString = "SELECT id FROM users WHERE username='"+ data.username +"';";
-        // db.connection.query(queryString, function(err, res) {
-        //   if (err) {
-        //     throw err;
-        //   } else {
-        //     console.log(res)
-        //     post.id_users = res[0].id;
-        //     db.connection.query('INSERT INTO messages SET ?', post, function(err, res){
-        //       if(err) { 
-        //         console.log(err.message);
-        //         callback(err);
-        //       }
-        //       else {
-        //         console.log('message posted')
-        //         callback(null, res);
-        //       }  
-        //     });
-        //   }
-        // });
         
       });
-
-      // users.post({username: data.username});
-      //populate fields with data for messages table
-      //check if user exists
-        //if not, add user to users table
-        // users.post(//username//)
-      //check if room
-        //if not add room to rooms table
     } 
   },
 
@@ -97,7 +69,6 @@ module.exports = {
         })
         .then(function(users) {
           // callback(null, users);
-          console.log(users[0].username)
           callback(null, JSON.stringify(users))  
         })
         .error(function(err) {
@@ -107,7 +78,6 @@ module.exports = {
       
     },
     post: function (data, callback) {
-        console.log(data);
       db.users.findOrCreate({
         where: {username: data}
       })
@@ -118,32 +88,6 @@ module.exports = {
         callback(err);
       })
     }
-
-// User.sync().success(function() {
-//   /* This callback function is called once sync succeeds. */
-
-//   // now instantiate an object and save it:
-//   var newUser = User.build({username: "Jean Valjean"});
-//   newUser.save().success(function() {
-
-//     /* This callback function is called once saving succeeds. */
-
-//     // Retrieve objects from the database:
-//     User.findAll({ where: {username: "Jean Valjean"} }).success(function(usrs) {
-//       // This function is called back with an array of matches.
-//       for (var i = 0; i < usrs.length; i++) {
-//         console.log(usrs[i].username + " exists");
-//       }
-//     });
-//   });
-// });
-        //if yes
-          //callback()
-        //otherwise add user to user table.
-      //posting to user table
-      //parse data
-      //query insert into users table
-      //passback callback
     
   }
 };
