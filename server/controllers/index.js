@@ -9,10 +9,11 @@ var headers = {
 module.exports = {
   messages: {
     get: function (req, res) {
-      models.messages.get(req.url, function(err, data){
+      models.messages.get(function(err, data){
         if(err){ console.log('error')}
         else {
           res.writeHead(200, headers);
+          console.log(data)
           res.end(data);
         }
       });
@@ -37,7 +38,7 @@ module.exports = {
   users: {
     // Ditto as above
     get: function (req, res) {
-      models.users.get(req.url, function(err, data){
+      models.users.get(function(err, data){
         if (err) { console.log('error')}
         else {
           res.writeHead(200, headers);

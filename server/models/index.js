@@ -2,8 +2,20 @@ var db = require('../db');
 
 module.exports = {
   messages: {
-    get: function (url, callback) {
+    get: function (callback) {
         //do something with database
+        //get messages from database
+        db.connection.query('SELECT m.objectId, m.createdAt, m.text, m.roomname, u.username FROM messages m inner join users u on(m.objectId = u.id);', function(error, results, fields){
+          //logic here
+          if(error){ console.log("Couldn't get messages")}
+          else {
+            var response = {results: results}
+            callback(null, JSON.stringify(response))
+
+          }
+        })
+          //select messages table, get all messages
+        //stringify JSON
         //callback(err, data)
     }, // a function which produces all the messages
     post: function (data, callback) {
@@ -15,8 +27,9 @@ module.exports = {
       data.createdAt = currentTime;
 
       var post = {
-        message: data.text,
-        createdAt: data.createdAt
+        text: data.text,
+        createdAt: data.createdAt,
+        roomname: data.roomname
       };
 
       db.connection.query('INSERT INTO messages SET ?', post, function(err, res){
@@ -29,6 +42,8 @@ module.exports = {
           callback(null, res);
         }  
       });
+
+      // users.post({username: data.username});
       //populate fields with data for messages table
       //check if user exists
         //if not, add user to users table
