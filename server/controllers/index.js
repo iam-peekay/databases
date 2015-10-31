@@ -13,26 +13,21 @@ module.exports = {
         if(err){ console.log('error')}
         else {
           res.writeHead(200, headers);
-          console.log(data)
           res.end(data);
         }
       });
     }, // a function which handles a get request for all messages
     post: function (req, res) {
-      var body = '';
-      req.on('data', function(chunk) {
-        body += chunk;
-        
-      });
-      req.on('end', function(err, data) {
+    // a function which handles posting a message to the database
+      var body = JSON.stringify(req.body); 
         models.messages.post(body, function(err) {
-          if (err) { res.end('500'); }
+          if (err) { console.log(err.message); res.end('500'); }
           else {
+            res.writeHead(201, headers);
             res.end('201');
           }
         });
-      });
-    } // a function which handles posting a message to the database
+     } 
   },
 
   users: {
@@ -52,9 +47,11 @@ module.exports = {
         body += chunk;
       });
       req.on('end', function(err) {
-        models.messages.post(body, function(err) {
+        var user = JSON.parse(body)
+        models.messages.post(user.username, function(err) {
           if (err) { res.end('500'); }
           else {
+            res.writeHead(201, headers);
             res.end('201');
           }
         });

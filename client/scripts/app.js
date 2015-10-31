@@ -37,19 +37,20 @@ var app = {
     app.startSpinner();
     // Clear messages input
     app.$message.val('');
-
+    console.log(data)
     // POST the message to the server
     $.ajax({
-      url: app.server,
+      url: 'http://127.0.0.1:3000/classes/messages',
       type: 'POST',
       data: JSON.stringify(data),
       contentType: 'application/json',
       success: function (data) {
         // Trigger a fetch to update the messages, pass true to animate
+         console.log('i ran')
         app.fetch();
       },
       error: function (data) {
-        console.error('chatterbox: Failed to send message');
+        console.log('chatterbox: Failed to send message');
       }
     });
   },
@@ -219,7 +220,6 @@ var app = {
       text: app.$message.val(),
       roomname: app.roomname || 'lobby'
     };
-
     app.send(message);
 
     // Stop the form from submitting
