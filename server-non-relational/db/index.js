@@ -1,8 +1,6 @@
 var Sequelize = require('sequelize');
 var sequelize = new Sequelize('chat', 'root', 'test');
-// Create a database connection and export it from this file.
-// You will need to connect with the user "root", no password,
-// and to the database "chat".
+// Creates a database connection and exporst it from this file.
 
 
 exports.messages = sequelize.define('messages', {

@@ -11,7 +11,8 @@ module.exports = {
 
           }
         })
-    }, // a function which produces all the messages
+    },
+    // a function which POSTs new messages to the database
     post: function (data, callback) {
       data = JSON.parse(data);
       var currentTime = (new Date()).toString()
@@ -22,6 +23,7 @@ module.exports = {
         createdAt: data.createdAt,
         roomname: data.roomname
       };
+
       module.exports.users.post(data.username, function(){
         var queryString = "SELECT id FROM users WHERE username='"+ data.username +"';";
         db.connection.query(queryString, function(err, res) {
@@ -30,19 +32,19 @@ module.exports = {
           } else {
             post.id_users = res[0].id;
             db.connection.query('INSERT INTO messages SET ?', post, function(err, res){
-              if(err) { 
+              if(err) {
                 console.log(err.message);
                 callback(err);
               }
               else {
                 callback(null, res);
-              }  
+              }
             });
           }
         });
-        
+
       });
-    } 
+    }
   },
 
   users: {
@@ -78,4 +80,3 @@ module.exports = {
     }
   }
 };
-

@@ -3,15 +3,17 @@ var promise = require('bluebird');
 
 module.exports = {
   messages: {
+    // Gets all user messages
     get: function (callback) {
-      
+
         db.messages.findAll({
           include: [db.users]
         })
         .then(function(result){
           callback(null, JSON.stringify(result));
         })
-    }, // a function which produces all the messages
+    },
+    // Posts new messages for a particular user
     post: function (data, callback) {
       data = JSON.parse(data);
       var post = {
@@ -34,30 +36,32 @@ module.exports = {
         .error(function(err){
           callback(err);
         })
-        
+
       });
-    } 
+    }
   },
 
   users: {
+    // Gets all users
     get: function (callback) {
-   
+
         db.users.findAll({
           where: {
             id : {
               gt: 0
-            } 
+            }
           }
         })
         .then(function(users) {
-          callback(null, JSON.stringify(users))  
+          callback(null, JSON.stringify(users))
         })
         .error(function(err) {
           callback(err);
           console.log('There is an error')
         })
-      
+
     },
+    // Creates a new user
     post: function (data, callback) {
       db.users.findOrCreate({
         where: {username: data}
@@ -69,7 +73,6 @@ module.exports = {
         callback(err);
       })
     }
-    
+
   }
 };
-

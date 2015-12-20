@@ -1,4 +1,5 @@
 var models = require('../models');
+
 var headers = {
   "access-control-allow-origin": "*",
   "access-control-allow-methods": "GET, POST, PUT, DELETE, OPTIONS",
@@ -6,8 +7,10 @@ var headers = {
   "access-control-max-age": 10, // Seconds.
   'Content-Type': "application/JSON"
 };
+
 module.exports = {
   messages: {
+    // handles a get request for all messages
     get: function (req, res) {
       models.messages.get(function(err, data){
         if(err){ console.log('error')}
@@ -16,11 +19,11 @@ module.exports = {
           res.end(data);
         }
       });
-    }, // a function which handles a get request for all messages
+    },
+
+    //handles posting a message to the database
     post: function (req, res) {
-    console.log(req.body)
-    // a function which handles posting a message to the database
-      var body = JSON.stringify(req.body); 
+      var body = JSON.stringify(req.body);
         models.messages.post(body, function(err) {
           if (err) { console.log(err.message); res.end('500'); }
           else {
@@ -28,11 +31,11 @@ module.exports = {
             res.end('201');
           }
         });
-     } 
+     }
   },
 
   users: {
-    // Ditto as above
+    // handles GET all users
     get: function (req, res) {
       models.users.get(function(err, data){
         if (err) { console.log('error')}
@@ -42,13 +45,10 @@ module.exports = {
         }
       });
     },
+
+    // handles new message POST by user
     post: function (req, res) {
-      var body = '';
-      req.on('data', function(err, chunk) {
-        body += chunk;
-      });
-      req.on('end', function(err) {
-        var user = JSON.parse(body)
+        var user = JSON.parse(req.body)
         models.messages.post(user.username, function(err) {
           if (err) { res.end('500'); }
           else {
@@ -56,8 +56,6 @@ module.exports = {
             res.end('201');
           }
         });
-      });
-    } 
+    }
   }
 };
-

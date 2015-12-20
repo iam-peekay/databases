@@ -1,8 +1,6 @@
 
 var app = {
 
-  //TODO: The current 'addFriend' function just adds the class 'friend'
-  //to all messages sent by the user
   server: 'http://127.0.0.1:3000/classes/messages',
   username: 'anonymous',
   roomname: 'lobby',
@@ -54,6 +52,7 @@ var app = {
     });
   },
 
+  // Fetch all messages
   fetch: function(animate) {
     $.ajax({
       url: app.server,
@@ -61,14 +60,14 @@ var app = {
       contentType: 'application/json',
       data: { order: '-createdAt'},
       success: function(data) {
-        console.log(data)
         data = JSON.parse(data);
         // Don't bother if we have nothing to work with
-        if (!data || !data.length) { 
+        if (!data || !data.length) {
           return; }
 
         // Get the last message
         var mostRecentMessage = data[data.length-1];
+        // Get the room name user is currently in
         var displayedRoom = $('.chat span').first().data('roomname');
         app.stopSpinner();
         // Only bother updating the DOM if we have a new message
@@ -95,9 +94,10 @@ var app = {
 
   populateMessages: function(results, animate) {
     // Clear existing messages
-
     app.clearMessages();
+
     app.stopSpinner();
+    
     if (Array.isArray(results)) {
       // Add all fetched messages
       results.forEach(app.addMessage);

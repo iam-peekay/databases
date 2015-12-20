@@ -11,7 +11,7 @@ var router = require('./routes.js');
 var app = express();
 module.exports.app = app;
 
-// Set what we are listening on.
+// Set what port we are listening on.
 app.set("port", 3000);
 
 // Logging and parsing
@@ -29,4 +29,3 @@ if (!module.parent) {
   app.listen(app.get("port"));
   console.log("Listening on", app.get("port"));
 }
-
